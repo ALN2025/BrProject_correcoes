@@ -1,0 +1,52 @@
+﻿# IDE / editor
+.vscode/
+
+# Gradle
+.gradle/
+
+# Build outputs
+bin/
+build/
+libs/
+Brproject_Distribution/
+correcao/build/
+
+# Local tool artifacts
+.kiro/
+
+# Local docs / patches / temp work
+EXEMPLO-PRATICO.txt
+GUIA-PR-*.md
+INSTRUCOES-PR-AUTO-FARM.md
+PASSO-A-PASSO-HABILITAR-CIRCULO.txt
+PR-REPOSITORIO-OFICIAL.md
+Patch_*.7z
+RESUMO-*.txt
+criar-pr-auto-farm.bat
+distribuicao-boot.zip
+update.zip
+correcao/auto-farm-visual.zip
+correcao/pix-mod.zip
+correcao/auto-farm-visual/
+correcao/config-item-admin/
+correcao/geodata/
+correcao/launcher/
+correcao/locale/
+mods/
+gradle/
+temp-pr-auto-farm/
+
+# Local build wrappers
+ant.bat
+build-server.bat
+build.gradle.kts
+gradlew.bat
+settings.gradle.kts
+build.xml
+
+# Local patches and workspace artifacts
+Patch_V2.7_Agathions_Brproject/
+
+# Logs and temporary files
+*.log
+*.tmp
