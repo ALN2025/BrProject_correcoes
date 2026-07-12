@@ -104,7 +104,25 @@ Cada correção é submetida como um Pull Request para o repositório oficial:
 - **Base:** `Dhousefe/Public_Brproject:main`
 - **Compare:** `ALN2025/BrProject_correcoes:fix/corrections-v1`
 
-## 🔗 Links
+## �️ Estrutura de Correção na Raiz
+
+A pasta `correcao/` na raiz do repositório é o local onde devem ficar todas as alterações copiadas do fork.
+Este repositório funciona como um hub de correções:
+- alterações feitas no fork são organizadas em `correcao/`
+- o conteúdo atualizado é usado para gerar PRs para o repositório oficial
+- aqui ficam correções do mod PIX, ajustes de configuração e implementações
+
+## 🏆 Minhas Contribuições (Dev ⩿ A.L.N/⪀)
+
+Esta seção documenta minhas contribuições principais para a correção e melhoria do projeto.
+
+- **Correção de compatibilidade Java:** Atualização de APIs `Locale` deprecadas para `Locale.forLanguageTag()`.
+- **Limpeza de código:** Remoção de imports não usados e anotações de supressão onde necessário.
+- **Implementação de paginação do PIX:** Melhor experiência de listagem de criptomoedas com navegação de páginas.
+- **Ajuste de configuração:** Correção dos caminhos de propriedades para `game/config/`.
+- **Detecção de idioma por país:** Novo mapeamento `country_locales.map` e suporte automático de locale.
+
+## �🔗 Links
 
 - **Repositório Oficial:** https://github.com/Dhousefe/Public_Brproject
 - **Fork do Usuário:** https://github.com/ALN2025/Public_Brproject
