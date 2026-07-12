@@ -2,17 +2,17 @@
 	<table width="300" cellpadding="2" cellspacing="2">
 		<tr>
 			<td><button width="30" height="30" back="Icon.etc_cross_of_einhasad_i01" fore="Icon.etc_cross_of_einhasad_i01"></td>
-			<td width="150">RUSaCis.com<br1>
-			Хроники 6: Интерлюд</td>
+			<td width="150">Brproject<br1>
+			Chronicle 6: Interlude</td>
 			<td><font color="504f50">Онлайн:</font> %online%<br1>
-			<font color="504f50">Торговцы:</font> %trader%</td>
+			<font color="504f50">Магазины:</font> %trader%</td>
 		</tr>
 	</table>
 	<img src=L2UI.SquareGray width=296 height=1>
 	<table width="270" cellpadding="2" cellspacing="2">
 		<tr>
 			<td><button width=30 height=30 back=Icon.action006 fore=Icon.action006></td>
-			<td width="200"><font color="0097ff">Получение опыта:</font><br1>
+			<td width="200"><font color="0097ff">Опыт:</font><br1>
 			Статус: %gainexp%</td>
 			<td width="30">
 				<button %button% width=75 height=21 back=L2UI_CH3.Btn1_normalOn fore=L2UI_CH3.Btn1_normal>
@@ -22,7 +22,7 @@
 	<table width="270" cellpadding="2" cellspacing="2">
 		<tr>
 			<td width="2"><button width=30 height=30 back=Icon.action005 fore=Icon.action005></td>
-			<td width="200"><font color="0097ff">Трейд:</font><br1>
+			<td width="200"><font color="0097ff">Торговля:</font><br1>
 			Статус: %trade%</td>
 			<td width="30">
 				<button %button1% width=75 height=21 back=L2UI_CH3.Btn1_normalOn fore=L2UI_CH3.Btn1_normal>
@@ -32,7 +32,7 @@
 	<table width="270" cellpadding="2" cellspacing="2">
 		<tr>
 			<td width="2"><button width=30 height=30 back=Icon.action008 fore=Icon.action008></td>
-			<td width="200"><font color="0097ff">Автолут:</font><br1>
+			<td width="200"><font color="0097ff">Авто Loot:</font><br1>
 			Статус: %autoloot%</td>
 			<td width="30">
 				<button %button2% width=75 height=21 back=L2UI_CH3.Btn1_normalOn fore=L2UI_CH3.Btn1_normal>
@@ -52,7 +52,7 @@
 	<table width="270" cellpadding="2" cellspacing="2">
 		<tr>
 			<td width="2"><button width=30 height=30 back=Icon.action018 fore=Icon.action018></td>
-			<td width="200"><font color="0097ff">Оффлайн трейд:</font></td>
+			<td width="200"><font color="0097ff">Оффлайн магазин:</font></td>
 			<td width="30">
 				<button width="75" height="21" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h voiced_offline" value="Запустить">
 			</td>
@@ -61,16 +61,54 @@
 	<img src=L2UI.SquareGray width=296 height=1>
 	<table width="300" cellpadding="2" cellspacing="2">
 		<tr>
-			<td align=center><font color="504f50">Максимальный онлайн с последнего рестарта:</font> %maxOnline%<br1>
-			<font color="504f50">Серверное время:</font> %serverTime%<br1>
-			<font color="504f50">Последний перезапуск:</font> %lastRestart%</td>
+			<td align=center><font color="504f50">Максимум онлайн с рестарта:</font> %maxOnline%<br1>
+			<font color="504f50">Время сервера:</font> %serverTime%<br1>
+			<font color="504f50">Последний рестарт:</font> %lastRestart%</td>
 		</tr>
 	</table>
 	<br>
-	<table bgcolor="666666" width="300">
+	<table bgcolor="666666" width="260" cellspacing="2" cellpadding="0">
 		<tr>
-			<td width="190" align="center">
-				<button width="75" height="21" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h voiced_lang en-US" value="АНГЛИЙСКИЙ">
+			<td align="center">
+				<button width="130" height="25" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h voiced_lang pt_BR open" value="ПОРТУГАЛЬСКИЙ">
+			</td>
+			<td align="center">
+				<button width="130" height="25" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h voiced_lang en_US open" value="АНГЛИЙСКИЙ">
+			</td>
+		</tr>
+		<tr>
+			<td width="10"></td>
+			<td align="center">
+				<button width="130" height="25" back="L2UI_ch3.Btn1_down" fore="L2UI_ch3.Btn1_normal" action="bypass -h voiced_lang ru_RU open" value="РУССКИЙ">
+			</td>
+			<td width="10"></td>
+		</tr>
+	</table>
+	<br>
+	<table bgcolor="666666" width="260" cellspacing="2" cellpadding="2">
+		<tr>
+			<td align="center" colspan="2">
+				<button width="240" height="25" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h admin_link events/events.htm" value="СОБЫТИЯ / МОДЫ">
+			</td>
+		</tr>
+	</table>
+	<br>
+	<table bgcolor="666666" width="260" cellspacing="2" cellpadding="2">
+		<tr>
+			<td width="2"><button width=30 height=30 back=Icon.action041 fore=Icon.action041></button></td>
+			<td align="center">
+				<button width="90" height="25" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h admin_ctf_start" value="CTF СТАРТ">
+			</td>
+			<td align="center">
+				<button width="90" height="25" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h admin_dm_start" value="DM СТАРТ">
+			</td>
+		</tr>
+		<tr>
+			<td align="center">
+				<button width="90" height="25" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h admin_lm_start" value="LM СТАРТ">
+			</td>
+			<td align="center">
+				<button width="90" height="25" back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal" action="bypass -h admin_tvt_start" value="TVT СТАРТ">
 			</td>
 		</tr>
 	</table>

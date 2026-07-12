@@ -443,5 +443,13 @@
 	<string key="12038">You cannot enter while registered in Deathmatch event.</string>
 	<string key="12039">You cannot enter while registered in Last Man event.</string>
 	<string key="12040">You are in a safe zone, teleporting directly to the instance.</string>
+	
+	<!-- CountryLocaleManager -->
+	<string key="10200">We detected a connection from %s. Server language set to %s.</string>
+	<string key="10201">We detected a connection from %s.</string>
+	
+	<!-- Pack (.pack) — project info -->
+	<string key="10212">Laboratory</string>
+	<string key="10213">L2JBrasil</string>
 </list>
 
