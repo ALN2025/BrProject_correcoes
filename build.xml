@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="BrProject" default="compile" basedir=".">
+
+    <target name="compile" description="Compila o projeto usando o build Ant interno">
+        <ant antfile="correcao/build/gradle-jar/src/build.xml" target="compile" />
+    </target>
+
+    <target name="jar" description="Gera server.jar usando o build Ant interno">
+        <ant antfile="correcao/build/gradle-jar/src/build.xml" target="jar" />
+    </target>
+
+    <target name="dist-local" description="Roda dist-local no build Ant interno">
+        <ant antfile="correcao/build/gradle-jar/src/build.xml" target="dist-local" />
+    </target>
+
+    <target name="clean" description="Limpa o build usando o build Ant interno">
+        <ant antfile="correcao/build/gradle-jar/src/build.xml" target="clean" />
+    </target>
+
+</project>

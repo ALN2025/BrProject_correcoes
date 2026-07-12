@@ -1,0 +1,85 @@
+# RESUMO SIMPLES: ONDE HABILITAR/DESABILITAR CÍRCULO AMARELO
+
+**Dev ⩿ A.L.N/⪀** - Aqui está o GUIA MAIS SIMPLES
+
+## 🎯 **COMO FUNCIONA:**
+
+**PARA HABILITAR (mostrar círculo):** DELETE as linhas que começam com `//`
+**PARA DESABILITAR (não mostrar):** MANTENHA as linhas que começam com `//`
+
+## 📁 **ARQUIVOS E LOCAIS:**
+
+### 1. **MovementIntegration.java** (linha ~165)
+```java
+// PARA HABILITAR: DELETE este "return;"
+// PARA DESABILITAR: MANTENHA este "return;"
+return;
+```
+
+### 2. **ZoneBuilder.java** (linha ~90)
+```java
+// PARA HABILITAR: DELETE este "return;"
+// PARA DESABILITAR: MANTENHA este "return;"
+return;
+```
+
+### 3. **ZoneCylinderZ.java** (linha ~50)
+```java
+// PARA HABILITAR: DELETE este "return;"
+// PARA DESABILITAR: MANTENHA este "return;"
+return;
+```
+
+### 4. **AutoFarmManager.java** (DOIS lugares)
+
+**Lugar 1** (linha ~364):
+```java
+// PARA HABILITAR: DELETE as 2 linhas "//" abaixo
+// PARA DESABILITAR: MANTENHA as 2 linhas "//"
+// if (!autoFarmProfile.isEnabled())
+// 	ZoneBuilder.getInstance().previewCylinder(player, autoFarmProfile.getFinalRadius());
+```
+
+**Lugar 2** (linha ~1265):
+```java
+// PARA HABILITAR: DELETE as 4 linhas "//" abaixo
+// PARA DESABILITAR: MANTENHA as 4 linhas "//"
+// final ScheduledFuture<?> task = ThreadPool.scheduleAtFixedRate(() -> {
+// 	ZoneBuilder.getInstance().clearAllPreview(player);
+// 	ZoneBuilder.getInstance().previewCylinder(player, radius);
+// }, 0, 100);
+```
+
+## 🔧 **PASSO A PASSO PARA TESTAR:**
+
+### **TESTE 1: Desabilitado (como está agora)**
+1. **MANTENHA** todos os `return;` e `//`
+2. **Compile:** `ant compile`
+3. **Teste:** Auto farm NÃO mostra círculo amarelo
+
+### **TESTE 2: Habilitado (para ver funcionando)**
+1. **DELETE** os `return;` e `//` (um arquivo por vez)
+2. **Compile:** `ant compile` 
+3. **Teste:** Auto farm MOSTRA círculo amarelo
+
+## 💡 **DICA PARA SEU VÍDEO:**
+
+**Mostre no vídeo:**
+1. "Aqui está o código DESABILITADO" → Mostra com `//` e `return;`
+2. "Para HABILITAR" → Delete as linhas `//` e `return;`
+3. "Compila e testa" → Mostra a diferença no jogo
+
+## 🎬 **CENAS PARA GRAVAR:**
+
+**Cena 1:** "Olha, aqui no MovementIntegration tem um `return;` que para o desenho"
+**Cena 2:** "Se eu tirar esse `return;`, o código volta a desenhar"
+**Cena 3:** "Compila, testa no servidor, e vê a diferença"
+
+---
+
+**Dev ⩿ A.L.N/⪀**, agora é **SUPER SIMPLES**! 
+
+**Quer mostrar círculo?** → Tira os `//` e `return;`
+**Não quer mostrar?** → Deixa os `//` e `return;`
+
+**Pronto para testar!** 🚀👨‍💻

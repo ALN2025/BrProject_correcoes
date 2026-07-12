@@ -1,0 +1,9 @@
+Pasta voice — Mod de Voz ALN
+============================
+
+1) Memurai/Redis em 127.0.0.1:6379
+2) Duplo-clique: L2VoiceServer.exe (banner Team-L2JALN)
+   Motor interno: bin\voice-server.exe
+3) Deixe a janela aberta
+
+Criado em: C:\Users\User\Desktop\BrProject\voice

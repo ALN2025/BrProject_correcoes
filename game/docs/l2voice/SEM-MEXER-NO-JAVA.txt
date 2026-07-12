@@ -1,0 +1,50 @@
+================================================================================
+  MOD DE VOZ — SEM EDITAR GameServer.java
+  Dev ALN | aCis / L2Off / Mobius
+================================================================================
+
+  JOGADORES (cliente L2) — NAO precisam de JAR nenhum:
+    l2voice.dll + voice.ini + L2VoiceInject.exe
+
+  DONO DO SERVIDOR — NAO precisa recompilar gameserver.jar:
+    1) libs/l2voice-bridge.jar + jedis-5.1.2.jar
+    2) config/custom/l2jalnvoice.properties
+    3) Uma linha no .bat que sobe o GS (javaagent)
+
+================================================================================
+  OPCAO A — javaagent (RECOMENDADO, sem sources)
+================================================================================
+
+  No script que inicia o GameServer, adicione ANTES do -jar ou da classe main:
+
+    -javaagent:libs/l2voice-bridge.jar
+
+  Exemplo (aCis):
+
+    java -server -Dfile.encoding=UTF-8 ^
+      -javaagent:libs/l2voice-bridge.jar ^
+      -cp ./libs/* net.sf.l2j.gameserver.GameServer
+
+  O ModVozALN.exe copia os JARs e a config. Voce so ajusta o .bat de subida
+  (L2GameServer.exe + gs-voz-launch.cfg na pasta game/).
+
+  No log do GS deve aparecer:
+    L2Voice javaagent carregado
+    L2Voice VoIP — Dev ALN (bridge JAR)
+
+================================================================================
+  OPCAO B — uma linha no GameServer.java (se voce tem sources)
+================================================================================
+
+    VoiceBridgeBootstrap.init();
+
+  Recompile o jar principal. Use so se preferir integrar na core.
+
+================================================================================
+  O bridge.jar e universal?
+================================================================================
+
+  Sim — um unico l2voice-bridge.jar para aCis, L2Off e Mobius.
+  Ele usa reflexao (L2WorldRef) — nao substitui gameserver.jar.
+
+================================================================================

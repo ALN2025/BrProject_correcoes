@@ -1,0 +1,97 @@
+# EXEMPLO PRÁTICO - COMO MEXER NO CÓDIGO
+
+## 📝 VOU TE MOSTRAR COMO É FÁCIL:
+
+### SITUAÇÃO ATUAL (círculo DESABILITADO):
+```java
+private static void visualizeFarmLimit(Player player, Location center, int radius)
+{
+    return;  // ⬅️ LINHA 1: Isso PARA tudo aqui
+    
+    // ExServerPrimitive packet = new ExServerPrimitive("AutoFarmRange", player.getObjectId());  // ⬅️ LINHA 2: Código comentado
+    // packet.addCircle(center.getX(), center.getY(), center.getZ(), radius, Color.YELLOW, true);  // ⬅️ LINHA 3: Código comentado
+}
+```
+
+---
+
+## 🎯 O QUE VOCÊ PRECISA FAZER:
+
+### PASSO 1: Delete a linha "return;"
+**ANTES:** `return;`  
+**DEPOIS:** (nada, a linha some)
+
+### PASSO 2: Remova "//" do início das linhas
+**ANTES:** `// ExServerPrimitive packet = ...`  
+**DEPOIS:** `ExServerPrimitive packet = ...`
+
+**ANTES:** `// packet.addCircle(...`  
+**DEPOIS:** `packet.addCircle(...`
+
+---
+
+## 🔄 RESULTADO FINAL:
+
+### DEPOIS DE HABILITAR (mostrar círculo):
+```java
+private static void visualizeFarmLimit(Player player, Location center, int radius)
+{
+    // ⬅️ NÃO TEM MAIS "return;" aqui
+    
+    ExServerPrimitive packet = new ExServerPrimitive("AutoFarmRange", player.getObjectId());  // ⬅️ SEM "//"
+    packet.addCircle(center.getX(), center.getY(), center.getZ(), radius, Color.YELLOW, true);  // ⬅️ SEM "//"
+    ... resto do código SEM "//" ...
+    player.sendPacket(packet);  // ⬅️ SEM "//"
+}
+```
+
+### PARA VOLTAR (desabilitar círculo):
+```java
+private static void visualizeFarmLimit(Player player, Location center, int radius)
+{
+    return;  // ⬅️ VOLTA o "return;" aqui
+    
+    // ExServerPrimitive packet = new ExServerPrimitive("AutoFarmRange", player.getObjectId());  // ⬅️ VOLTA "//"
+    // packet.addCircle(center.getX(), center.getY(), center.getZ(), radius, Color.YELLOW, true);  // ⬅️ VOLTA "//"
+    ... resto do código COM "//" ...
+    // player.sendPacket(packet);  // ⬅️ VOLTA "//"
+}
+```
+
+---
+
+## 📋 CHECKLIST PARA VOCÊ:
+
+### ✅ FAÇA ISSO EM 4 ARQUIVOS:
+1. **MovementIntegration.java** - delete `return;` e remova `//`
+2. **ZoneBuilder.java** - delete `return;` e remova `//`  
+3. **ZoneCylinderZ.java** - delete `return;` e remova `//`
+4. **AutoFarmManager.java** - remova `//` (não tem `return;` aqui)
+
+### ✅ DEPOIS COMPILE:
+```
+ant compile
+```
+
+### ✅ DEPOIS TESTE:
+1. Suba o servidor
+2. Ative auto farm
+3. **Se fez certo:** Aparece círculo amarelo
+4. **Se fez errado:** Não aparece círculo amarelo
+
+---
+
+## 💡 DICA IMPORTANTE:
+
+**SEMPRE siga esta ordem:**
+1. Edite UM arquivo
+2. Compile (`ant compile`)
+3. Teste no servidor
+4. Se funcionar, vá para próximo arquivo
+
+**Assim você sabe exatamente qual arquivo deu problema!**
+
+---
+
+**Dev ⩿ A.L.N/⪀**, é **SÓ ISSO** que você precisa fazer!  
+Delete `return;` e remova `//` em 4 arquivos. Depois compile e teste! 🚀

@@ -1,0 +1,51 @@
+================================================================================
+  PACK PERSONALIZADO (package diferente de aCis / L2Off / Mobius)
+  Mesmo l2voice-bridge.jar — so editar l2jalnvoice.properties
+================================================================================
+
+  NAO precisa recompilar o bridge.jar.
+  NAO precisa colocar classes L2J dentro do jar.
+
+  O bridge usa REFLEXAO: ele chama as classes do SEU gameserver.jar
+  que ja esta no classpath.
+
+================================================================================
+  PASSO 1 — Copiar JARs (igual qualquer pack)
+================================================================================
+
+  game/libs/l2voice-bridge.jar
+  game/libs/jedis-5.1.2.jar
+  game/config/custom/l2jalnvoice.properties
+
+================================================================================
+  PASSO 2 — Informar as 3 classes no .properties
+================================================================================
+
+  Abra config/custom/l2jalnvoice.properties e descomente/ajuste:
+
+  l2jalnvoice.fork.world = com.SEUPACK.model.L2World
+  l2jalnvoice.fork.player = com.SEUPACK.model.actor.instance.L2PcInstance
+  l2jalnvoice.fork.gameClient = com.SEUPACK.network.L2GameClient
+
+  Como achar os nomes:
+    - Abra seu gameserver.jar com 7-Zip
+    - Procure L2World.class, L2PcInstance.class (ou Player.class)
+    - O nome e o caminho com pontos em vez de barras
+
+  fork.mmoConnection = (deixe vazio — o bridge detecta sozinho)
+
+================================================================================
+  PASSO 3 — Ativar sem editar .java
+================================================================================
+
+  -javaagent:libs/l2voice-bridge.jar
+  (veja SEM-MEXER-NO-JAVA.txt)
+
+================================================================================
+  Auto-detect (sem fork.*)
+================================================================================
+
+  Se NAO preencher fork.*, o jar tenta nesta ordem:
+    L2jMega -> aCis/RusaCis -> L2jFrozen -> L2JServer -> L2Emu/EmuDev -> Mobius
+
+================================================================================

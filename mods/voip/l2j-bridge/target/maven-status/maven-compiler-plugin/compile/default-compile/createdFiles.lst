@@ -1,0 +1,14 @@
+com\luannbr\l2voice\bridge\L2WorldRef$ForkProfile.class
+com\luannbr\l2voice\bridge\PositionPoller.class
+com\luannbr\l2voice\bridge\L2JalnVoiceConfig.class
+com\luannbr\l2voice\bridge\VoiceServerLink.class
+com\luannbr\l2voice\bridge\RedisPublisher.class
+com\luannbr\l2voice\bridge\L2WorldRef$SnapshotSink.class
+com\luannbr\l2voice\bridge\VoiceBridge.class
+com\luannbr\l2voice\bridge\ValidateHttpServer.class
+com\luannbr\l2voice\bridge\L2WorldRef$Endpoint.class
+com\luannbr\l2voice\bridge\L2WorldRef.class
+com\luannbr\l2voice\bridge\TokenIssuer.class
+com\luannbr\l2voice\bridge\L2WorldRef$Sink.class
+com\luannbr\l2voice\bridge\L2WorldRef$PlayerSnapshot.class
+com\luannbr\l2voice\bridge\VoiceServerLink$Listener.class

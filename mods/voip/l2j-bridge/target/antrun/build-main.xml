@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="maven-antrun-" default="main">
+  <target name="main">
+    <mkdir dir="D:\source\mods\voip\l2j-bridge/../../../pack base/gameserver/libs" />
+    <copy file="D:\source\mods\voip\l2j-bridge\target/l2voice-bridge-0.1.0.jar" tofile="D:\source\mods\voip\l2j-bridge/../../../pack base/gameserver/libs/l2voice-bridge-0.1.0.jar" overwrite="true" />
+  </target>
+</project>

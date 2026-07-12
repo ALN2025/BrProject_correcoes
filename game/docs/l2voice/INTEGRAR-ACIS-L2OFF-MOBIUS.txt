@@ -1,0 +1,43 @@
+================================================================================
+  MOD DE VOZ ALN — PACKS SUPORTADAS (auto-detect)
+================================================================================
+
+  O mesmo l2voice-bridge.jar funciona em todas abaixo.
+  O instalador ModVozALN detecta a pack e configura fork.* automaticamente.
+
+  SUPORTE NATIVO (auto-detect no bridge + instalador)
+  --------------------------------------------------
+  L2jMega / L2JALN     com.l2jmega.*
+  aCis                  net.sf.l2j.*
+  RusaCis               net.sf.l2j.* (mesmo aCis)
+  L2jFrozen             com.l2jfrozen.*
+  L2JServer             com.l2jserver.*
+  L2Emu / L2Off         net.l2emuproject.*
+  EmuDev                net.l2emuproject.*
+  L2jMobius             org.l2jmobius.*
+
+  PACK PERSONALIZADA
+  ------------------
+  Edite fork.* em config/custom/l2jalnvoice.properties
+  (veja PACK-PERSONALIZADO.txt)
+
+================================================================================
+  INSTALACAO (qualquer pack)
+================================================================================
+
+  1) ModVozALN.exe — escolha raiz da pack, cliente system, voice/
+  2) Memurai/Redis 127.0.0.1:6379
+  3) INICIAR-SERVIDOR-COM-VOZ.bat (Login -> Voice -> GS)
+  4) Cliente: L2VoiceInject.exe
+
+  GameServer SEM editar .java:
+    -javaagent:libs/l2voice-bridge.jar
+
+================================================================================
+  NO JOGO
+================================================================================
+
+  INSERT = painel de voz
+  H (segurar) = falar proximidade
+
+================================================================================

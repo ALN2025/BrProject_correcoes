@@ -1,0 +1,114 @@
+# GUIA PASSO A PASSO PARA IMPLEMENTAR
+
+**Dev ⩿ A.L.N/⪀** - Siga estes passos para implementar as duas funcionalidades:
+
+## 📋 **PASSO 1: CONFIGURAÇÃO JÁ FEITA**
+
+✅ **Configuração adicionada** em `players.properties`:
+- `ShowItemIdForAdminOnly = True` - Só admins veem ID
+- `MinimumAccessLevelToSeeItemId = 1` - Nível mínimo admin
+- `StartingItems_*` - Itens iniciais configurados
+
+## 📁 **PASSO 2: ARQUIVOS CRIADOS**
+
+✅ **1. `ItemHelper.java`** - Classe para formatar nome do item
+✅ **2. `StartingItemsManager.java`** - Classe para dar itens iniciais
+
+## 🔧 **PASSO 3: ONDE IMPLEMENTAR**
+
+### **PARA ID DO ITEM (admins apenas):**
+
+**Local 1: Arquivo `ItemInstance.java` (onde mostra nome do item)**
+```java
+// Procure o método que retorna o nome do item, como:
+public String getName() {
+    // Mude para:
+    if (player != null) {
+        return ItemHelper.getFormattedItemName(player, this);
+    }
+    return _item.getName();
+}
+```
+
+**Local 2: Packet `ItemList.java` (envia itens para cliente)**
+```java
+// Procure onde formata o nome do item no packet
+item.writeS(ItemHelper.getFormattedItemName(player, item));
+```
+
+### **PARA ITENS INICIAIS:**
+
+**Local 1: Arquivo `EnterWorld.java` (quando jogador entra)**
+```java
+// Procure onde o jogador entra no mundo, adicione:
+StartingItemsManager.getInstance().giveStartingItems(player);
+```
+
+**Local 2: Arquivo `CharacterCreate.java` (cria personagem)**
+```java
+// Procure onde cria novo personagem, adicione:
+StartingItemsManager.getInstance().giveStartingItems(player);
+```
+
+## 🎯 **PASSO 4: COMO TESTAR**
+
+### **TESTE 1: ID do item para admins**
+1. **Faça login como ADMIN** (nível de acesso >= 1)
+2. **Passe mouse em um item**
+3. **Deve mostrar:** "Nome do Item (ID: 1234)"
+4. **Faça login como JOGADOR NORMAL** (nível 0)
+5. **Passe mouse no mesmo item**
+6. **Deve mostrar apenas:** "Nome do Item"
+
+### **TESTE 2: Itens iniciais**
+1. **Crie um novo personagem**
+2. **Entre no jogo com ele**
+3. **Verifique inventário**
+4. **Deve ter os itens configurados:**
+   - 1000 Adena (ID 57)
+   - 10 Scroll: Enchant Weapon (ID 1835)
+   - 1 Lesser Healing Potion (ID 1060)
+   - Itens da raça/classe específica
+
+## 💡 **PASSO 5: PERSONALIZAR**
+
+### **Personalizar IDs visíveis:**
+1. Abra `players.properties`
+2. Mude `ShowItemIdForAdminOnly = False` para todos verem
+3. Mude `MinimumAccessLevelToSeeItemId = 3` para admins nível 3+
+
+### **Personalizar itens iniciais:**
+1. Abra `players.properties`
+2. Edite as linhas `StartingItems_*`
+3. **Formato:** `itemId:quantidade,itemId:quantidade,...`
+4. **Exemplo:** `57:5000,1835:50,17:1`
+
+## 🚀 **PASSO 6: IMPLEMENTAÇÃO RÁPIDA**
+
+**Para testar rápido, faça isto:**
+
+1. **Copie os arquivos** para a pasta `java/ext/mods/gameserver/`
+2. **Encontre o método** `onEnterWorld()` em `EnterWorld.java`
+3. **Adicione esta linha** no final do método:
+   ```java
+   StartingItemsManager.getInstance().giveStartingItems(player);
+   ```
+4. **Compile:** `ant compile`
+5. **Teste:** Crie novo personagem e veja os itens
+
+## 📝 **NOTAS IMPORTANTES:**
+
+1. **IDs de item** - Verifique IDs corretos na database
+2. **Níveis de acesso** - 0=jogador, 1=GM normal, >1=GM superior
+3. **Configuração** - Reinicie servidor após mudar `players.properties`
+4. **Logs** - Verifique logs se itens não estiverem sendo dados
+
+---
+
+**Dev ⩿ A.L.N/⪀**, siga estes passos e suas duas funcionalidades estarão funcionando! 🎯
+
+**Para seu vídeo:**
+1. Mostre a configuração em `players.properties`
+2. Mostre a diferença entre admin e jogador normal
+3. Mostre itens sendo dados ao criar personagem
+4. Explique como personalizar

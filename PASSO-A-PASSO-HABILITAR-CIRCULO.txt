@@ -1,0 +1,152 @@
+# PASSO A PASSO PARA HABILITAR/DESABILITAR CÍRCULO AMARELO
+
+## ⚠️ ATENÇÃO: Siga EXATAMENTE estes passos
+
+---
+
+## 📁 ARQUIVO 1: MovementIntegration.java
+
+### LOCAL: Linha ~165
+### O QUE FAZER:
+
+**ATUALMENTE (círculo DESABILITADO):**
+```java
+private static void visualizeFarmLimit(Player player, Location center, int radius)
+{
+    return;  // ⬅️ Esta linha PARA o método
+    
+    // ExServerPrimitive packet = new ExServerPrimitive("AutoFarmRange", player.getObjectId());
+    // packet.addCircle(center.getX(), center.getY(), center.getZ(), radius, Color.YELLOW, true);
+    // ... resto do código comentado ...
+    // player.sendPacket(packet);
+}
+```
+
+### PASSO 1: Para HABILITAR círculo
+1. **DELETE** esta linha: `return;`
+2. **REMOVA** todos os `//` do início das linhas abaixo
+
+### PASSO 2: Para DESABILITAR círculo  
+1. **COLOQUE** esta linha: `return;`
+2. **ADICIONE** `//` no início de todas as linhas abaixo
+
+### RESULTADO HABILITADO:
+```java
+private static void visualizeFarmLimit(Player player, Location center, int radius)
+{
+    ExServerPrimitive packet = new ExServerPrimitive("AutoFarmRange", player.getObjectId());
+    packet.addCircle(center.getX(), center.getY(), center.getZ(), radius, Color.YELLOW, true);
+    ... resto do código SEM "//" ...
+    player.sendPacket(packet);
+}
+```
+
+---
+
+## 📁 ARQUIVO 2: ZoneBuilder.java
+
+### LOCAL: Linha ~90
+### O QUE FAZER:
+
+**ATUALMENTE (círculo DESABILITADO):**
+```java
+private static void previewCylinderCalc(Player player, ExServerPrimitive debug, int radius, Color color, Location center)
+{
+    return;  // ⬅️ Esta linha PARA o método
+    
+    // for (int i = 0; i < 360; i++)
+    // {
+    //     double rad = Math.toRadians(i);
+    //     int x = center.getX() + (int)(radius * Math.cos(rad));
+    //     ... resto do código comentado ...
+    // }
+}
+```
+
+### PASSO 1: Para HABILITAR círculo
+1. **DELETE** `return;`
+2. **REMOVA** todos os `//`
+
+### PASSO 2: Para DESABILITAR círculo
+1. **COLOQUE** `return;`
+2. **ADICIONE** `//` em todas as linhas
+
+---
+
+## 📁 ARQUIVO 3: ZoneCylinderZ.java
+
+### LOCAL: Linha ~50
+### MESMO PROCEDIMENTO:
+1. HABILITAR: delete `return;` e remova `//`
+2. DESABILITAR: coloque `return;` e adicione `//`
+
+---
+
+## 📁 ARQUIVO 4: AutoFarmManager.java
+
+### LOCAL 1: Linha ~364
+**ATUALMENTE:**
+```java
+// if (!autoFarmProfile.isEnabled())
+//     ZoneBuilder.getInstance().previewCylinder(player, autoFarmProfile.getFinalRadius());
+```
+
+### PASSO 1: Para HABILITAR
+**REMOVA** os `//` no início:
+```java
+if (!autoFarmProfile.isEnabled())
+    ZoneBuilder.getInstance().previewCylinder(player, autoFarmProfile.getFinalRadius());
+```
+
+### PASSO 2: Para DESABILITAR
+**ADICIONE** `//` no início:
+```java
+// if (!autoFarmProfile.isEnabled())
+//     ZoneBuilder.getInstance().previewCylinder(player, autoFarmProfile.getFinalRadius());
+```
+
+### LOCAL 2: Linha ~1265
+**MESMO PROCEDIMENTO** para as linhas comentadas lá.
+
+---
+
+## 🔧 RESUMO FINAL:
+
+### PARA HABILITAR CÍRCULO (mostrar):
+1. Em **4 arquivos**: delete `return;` (se tiver)
+2. Em **4 arquivos**: remova `//` do início das linhas
+3. Execute `ant compile`
+4. Teste no servidor
+
+### PARA DESABILITAR CÍRCULO (não mostrar):
+1. Em **4 arquivos**: coloque `return;` no início do método
+2. Em **4 arquivos**: adicione `//` no início das linhas
+3. Execute `ant compile`
+4. Teste no servidor
+
+---
+
+## ✅ COMO SABER SE DEU CERTO:
+
+### TESTE 1: Círculo HABILITADO
+- Ative auto farm no servidor
+- **DEVE APARECER** círculo amarelo
+
+### TESTE 2: Círculo DESABILITADO  
+- Ative auto farm no servidor
+- **NÃO DEVE APARECER** círculo amarelo
+
+---
+
+## 🎯 REGRA DE OURO:
+
+**`return;` = NÃO mostra círculo**  
+**SEM `return;` = MOSTRA círculo**
+
+**`//` no código = NÃO mostra círculo**  
+**SEM `//` no código = MOSTRA círculo**
+
+---
+
+**Dev ⩿ A.L.N/⪀**, agora é só seguir estes passos!  
+Um arquivo de cada vez, compile e teste. 🚀

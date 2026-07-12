@@ -1,0 +1,22 @@
+<html><title>Voz</title><body>
+<center>
+<table width=300 cellpadding=3 cellspacing=0 bgcolor=000000>
+<tr><td align=center><font color="LEVEL">L2Voice — chat de voz</font></td></tr>
+<tr><td align=center><font color="LEVEL">Dev ALN</font></td></tr>
+<tr><td align=center>%bridge_status%</td></tr>
+<tr><td align=center>%session_status%</td></tr>
+<tr><td><img src="L2UI.SquareGray" width=280 height=1></td></tr>
+<tr><td align=left><font color="FF6666">Sem icone/toast = cliente nao ligou.</font></td></tr>
+<tr><td align=left>1) <font color="LEVEL">Patch obrigatorio</font>: o cliente L2 tem de carregar <font color="LEVEL">l2voice.dll</font> (IAT na Engine.dll). So copiar ficheiros NAO basta.</td></tr>
+<tr><td align=left>2) Copie <font color="LEVEL">l2voice.dll</font> + <font color="LEVEL">voice.ini</font> para a pasta do L2.exe.</td></tr>
+<tr><td align=left>3) <font color="LEVEL">voice.ini</font>: ws_url = ws://IP_DA_VPS:17667/ws</td></tr>
+<tr><td align=left>4) Na VPS: <font color="LEVEL">voice-server</font> (UDP 17666 + TCP 17667) + Redis/Memurai.</td></tr>
+<tr><td align=left>5) GS: bridge integrada na core + este l2jalnvoice.properties</td></tr>
+<tr><td align=left>6) Icone dourado abaixo HP apos ~10s no mundo (headset + mic).</td></tr>
+<tr><td align=left>7) <font color="LEVEL">Insert</font> = painel | <font color="LEVEL">F7</font> = restaurar UI</td></tr>
+<tr><td align=center><br>
+<button value="Fechar" action="link close" width=100 height=21 back="L2UI_ch3.Btn1_normalOn" fore="L2UI_ch3.Btn1_normal">
+</td></tr>
+</table>
+</center>
+</body></html>
