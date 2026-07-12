@@ -1,0 +1,54 @@
+# Mapeamento de código de país para locale
+# Formato: COUNTRY_CODE=LOCALE_TAG
+# Quando um player entra, o sistema detecta seu país e aplica a locale configurada
+
+# Brasil
+BR=pt-BR
+
+# Estados Unidos
+US=en-US
+
+# Rússia
+RU=ru-RU
+
+# Reino Unido
+GB=en-US
+
+# Alemanha
+DE=en-US
+
+# França
+FR=en-US
+
+# España
+ES=en-US
+
+# Itália
+IT=en-US
+
+# Canadá
+CA=en-US
+
+# Austrália
+AU=en-US
+
+# Japão
+JP=en-US
+
+# China
+CN=en-US
+
+# Índia
+IN=en-US
+
+# México
+MX=en-US
+
+# Argentina
+AR=en-US
+
+# Chile
+CL=en-US
+
+# Colômbia
+CO=en-US

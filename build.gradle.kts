@@ -4,6 +4,7 @@ import org.gradle.jvm.tasks.Jar
 import org.gradle.api.tasks.Copy 
 import org.gradle.api.tasks.JavaExec 
 import org.gradle.api.Task
+import org.gradle.jvm.toolchain.JavaLanguageVersion
 import java.time.Instant
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -26,11 +27,38 @@ repositories {
 
 val antClassesDir = layout.buildDirectory.dir("classes")
 
+val extraCorrecaoJavaDirs = file("correcao").walkTopDown()
+    .filter { it.isDirectory && it.name == "java" }
+    .filter {
+        !it.path.contains("build${File.separator}") &&
+        !it.path.contains(".gradle${File.separator}") &&
+        !it.path.contains("Brproject_Distribution${File.separator}") &&
+        !it.path.contains("${File.separator}pix-mod${File.separator}pix-mod${File.separator}java") &&
+        !it.path.contains("invalid-java-sources")
+    }
+    .toList()
+
+val extraCorrecaoKotlinDirs = file("correcao").walkTopDown()
+    .filter { it.isDirectory && it.name == "kotlin" }
+    .filter {
+        !it.path.contains("build${File.separator}") &&
+        !it.path.contains(".gradle${File.separator}") &&
+        !it.path.contains("Brproject_Distribution${File.separator}") &&
+        !it.path.contains("${File.separator}java${File.separator}kotlin") &&
+        !it.path.contains("${File.separator}pix-mod${File.separator}pix-mod${File.separator}src${File.separator}kotlin") &&
+        !it.path.contains("invalid-java-sources")
+    }
+    .toList()
+
 // 3. Estrutura de Pastas
 sourceSets {
     main {
-        java.srcDirs("java") 
-        kotlin.srcDirs("kotlin") 
+        java.srcDirs(listOf(file("java")) + extraCorrecaoJavaDirs)
+        java {
+            exclude("**/*$*.java")
+            exclude("**/invalid-java-sources/**")
+        }
+        kotlin.srcDirs(listOf(file("kotlin")) + extraCorrecaoKotlinDirs)
         kotlin {
             // As exclusões permanecem
         }
@@ -39,9 +67,9 @@ sourceSets {
 
 // 3.5. Configuração de Compilação Híbrida (Compatibilidade Máxima)
 
-// Configura JVM Toolchain para Java 25 (garante que Kotlin e Java usem JDK 25)
+// Configura JVM Toolchain para Java 21 usando o JDK de sistema disponível
 kotlin {
-    jvmToolchain(25)
+    jvmToolchain(21)
 }
 
 tasks.withType<JavaCompile> {
@@ -67,9 +95,9 @@ tasks.withType<KotlinCompile>().all {
     
     // Usa compilerOptions (nova API recomendada)
     compilerOptions {
-        // Kotlin 2.3.0-Beta2+ suporta JVM target 25
-        // Usa JVM_25 diretamente (suportado nesta versão)
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_25)
+        // Kotlin 2.3.0-Beta2+ suporta JVM target 21
+        // Usa JVM_21 diretamente (suportado nesta versão)
+        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
         freeCompilerArgs.addAll(
             "-Xno-call-assertions", 
             "-Xno-param-assertions", 
@@ -91,13 +119,15 @@ tasks.named<JavaCompile>("compileJava") {
     classpath = files(antClassesDir.get().asFile) + files(kotlinCompile.destinationDirectory) + files(kotlinCompile.outputs.files) + classpath
 }
 
+tasks.named("classes") {
+    finalizedBy(tasks.named("jar"))
+}
 
 // 4. Configuração do Java/Kotlin
-// Kotlin 2.3.0-Beta2+ suporta JVM target 25 nativamente
-// Ambos Java e Kotlin compilam para JVM 25 com suporte completo
+// Ambos Java e Kotlin compilam para JVM 21 para compatibilidade com o JDK instalado
 java {
-    sourceCompatibility = JavaVersion.VERSION_25
-    targetCompatibility = JavaVersion.VERSION_25
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
 }
 
 // 5. Dependências
@@ -130,7 +160,8 @@ dependencies {
 	implementation("com.google.zxing:core:3.5.3")
 	implementation("com.google.zxing:javase:3.5.3")
 	implementation("com.mailersend:java-sdk:1.4.1")
-	
+	implementation("com.google.code.gson:gson:2.10.1")
+	implementation("com.googlecode.json-simple:json-simple:3.0.2")
 	
     
     

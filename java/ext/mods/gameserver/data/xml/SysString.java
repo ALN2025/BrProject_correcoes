@@ -17,6 +17,7 @@
  */
 package ext.mods.gameserver.data.xml;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Locale;
@@ -58,11 +59,30 @@ public final class SysString extends AbstractLocaleData implements IXmlReader
 		{
 			_activeLocale = locale;
 			_data.put(locale, new ConcurrentHashMap<>());
-			parseFile(resolve(locale, "sysstring.xml").toString());
+			parseFile(resolveLocaleFile(locale, "sysstring.xml").toString());
 			locale = null;
 		}
 	}
-	
+
+	private Path resolveLocaleFile(Locale locale, String file)
+	{
+		String l1 = locale.toString();
+		String l2 = locale.toLanguageTag();
+		String l3 = locale.getLanguage();
+		String l4 = l1.toLowerCase();
+		String l5 = l2.toLowerCase();
+		String l6 = l1.replace('_', '-');
+		String l7 = l1.replace('-', '_');
+		String[] candidates = new String[] { l1, l2, l3, l4, l5, l6, l7 };
+		for (String c : candidates)
+		{
+			Path p = Path.of("data/locale").resolve(c).resolve(file);
+			if (Files.exists(p))
+				return p;
+		}
+		return Path.of("data/locale").resolve(l1).resolve(file);
+	}
+
 	@Override
 	public void parseDocument(Document doc, Path path)
 	{

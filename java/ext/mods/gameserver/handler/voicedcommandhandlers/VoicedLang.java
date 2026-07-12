@@ -91,18 +91,18 @@ public class VoicedLang implements IVoicedCommandHandler
 
 	private Locale toLocale(String code)
 	{
-		if (code == null) return new Locale("pt", "BR");
-		String normalized = code.trim().replace('-', '_').toLowerCase();
+		if (code == null) return Locale.forLanguageTag("pt-BR");
+		String normalized = code.trim().replace('_', '-').toLowerCase();
 		switch (normalized)
 		{
-			case "pt_br":
-				return new Locale("pt", "BR");
-			case "en_us":
-				return new Locale("en", "US");
-			case "ru_ru":
-				return new Locale("ru", "RU");
+			case "pt-br":
+				return Locale.forLanguageTag("pt-BR");
+			case "en-us":
+				return Locale.forLanguageTag("en-US");
+			case "ru-ru":
+				return Locale.forLanguageTag("ru-RU");
 			default:
-				return new Locale(normalized);
+				return Locale.forLanguageTag(normalized);
 		}
 	}
 	

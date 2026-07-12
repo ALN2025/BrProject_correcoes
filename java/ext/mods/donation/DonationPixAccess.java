@@ -51,7 +51,7 @@ public final class DonationPixAccess
 		}
 		catch (Exception e)
 		{
-			LOGGER.warn("Falha ao abrir loja PIX para {}.", e, player.getName());
+			LOGGER.warn("Falha ao abrir loja PIX para {}.", player.getName(), e);
 			player.sendMessage("en".equals(lang) ? "Could not open the shop. Check GameServer log." : "Nao foi possivel abrir a loja. Veja o log do GameServer.");
 			player.sendPacket(ActionFailed.STATIC_PACKET);
 			return false;

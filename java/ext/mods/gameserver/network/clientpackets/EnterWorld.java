@@ -32,7 +32,7 @@ import ext.mods.gameserver.communitybbs.manager.MailBBSManager;
 import ext.mods.gameserver.custom.data.EquipGradeRestrictionData;
 import ext.mods.gameserver.data.SkillTable;
 import ext.mods.gameserver.data.SkillTable.FrequentSkill;
-import ext.mods.gameserver.data.manager.CountryLocaleManager;
+// CountryLocaleManager import removed — not used in this class to avoid unused-import warnings
 import ext.mods.gameserver.data.manager.CastleManager;
 import ext.mods.gameserver.data.manager.ClanHallManager;
 import ext.mods.gameserver.data.manager.CoupleManager;
@@ -362,7 +362,8 @@ public class EnterWorld extends L2GameClientPacket
 		
 		SafeDisconnectManager.getInstance().onEnterWorld(player);
 		
-		CountryLocaleManager.getInstance().onEnterWorld(player, getClient());
+		// CountryLocaleManager removed by user request
+		// CountryLocaleManager.getInstance().onEnterWorld(player, getClient());
 		
 		if (Config.ENABLE_PIX_MOD && Config.DONATION_ENABLED)
 			net.sf.donationmanager.DonationManager.getInstance().offlinePlayer(player);

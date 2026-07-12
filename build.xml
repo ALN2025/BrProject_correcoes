@@ -1,20 +1,134 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="BrProject" default="compile" basedir=".">
 
-    <target name="compile" description="Compila o projeto usando o build Ant interno">
-        <ant antfile="correcao/build/gradle-jar/src/build.xml" target="compile" />
+    <!-- Diretórios principais (o usuário pediu que a pasta `java` seja raiz do código) -->
+    <property name="src.dir" value="java"/>
+    <property name="dist.dir" value="Brproject_Distribution"/>
+    <property name="classes.dir" value="build/classes"/>
+    <property name="libs.dir" value="libs"/>
+    <property name="correcao.dir" value="correcao"/>
+    <property name="project.dir" value="."/>
+
+    <target name="init" description="Cria pastas de build">
+        <mkdir dir="${classes.dir}"/>
+        <mkdir dir="${libs.dir}"/>
+        <mkdir dir="${correcao.dir}"/>
     </target>
 
-    <target name="jar" description="Gera server.jar usando o build Ant interno">
-        <ant antfile="correcao/build/gradle-jar/src/build.xml" target="jar" />
+    <target name="collect-kotlin-files" description="Gera lista de arquivos Kotlin (para `kotlinc`)" depends="init">
+        <pathconvert property="kotlin.files" pathsep="\n">
+            <fileset dir="${src.dir}" includes="**/*.kt"/>
+        </pathconvert>
+
+        <echo file="${src.dir}/kotlin-files.txt">${kotlin.files}</echo>
+
+        <!-- Detecta se `kotlinc` está disponível no PATH usando `where` (Windows) ou `which` (Unix) -->
+        <condition property="detect.cmd" value="where" else="which">
+            <os family="windows"/>
+        </condition>
+
+        <exec executable="${detect.cmd}" resultproperty="kotlinc.exit" failonerror="false">
+            <arg value="kotlinc"/>
+        </exec>
+
+        <condition property="kotlinc.available">
+            <equals arg1="${kotlinc.exit}" arg2="0"/>
+        </condition>
+
+        <!-- Define se existem arquivos .kt -->
+        <condition property="has.kotlin">
+            <resourcecount when="greater" count="0">
+                <fileset dir="${src.dir}" includes="**/*.kt"/>
+            </resourcecount>
+        </condition>
+
+        <!-- Só compila Kotlin se houver arquivos e `kotlinc` estiver disponível -->
+        <condition property="should.compile.kotlin">
+            <and>
+                <isset property="has.kotlin"/>
+                <isset property="kotlinc.available"/>
+            </and>
+        </condition>
     </target>
 
-    <target name="dist-local" description="Roda dist-local no build Ant interno">
-        <ant antfile="correcao/build/gradle-jar/src/build.xml" target="dist-local" />
+    <target name="compile-java" description="Compila arquivos Java do java" depends="init">
+        <condition property="has.java">
+            <resourcecount when="greater" count="0">
+                <fileset dir="${src.dir}" includes="**/*.java"/>
+            </resourcecount>
+        </condition>
+
+        <echo message="has.java=${has.java}"/>
+
+        <javac srcdir="${src.dir}" destdir="${classes.dir}" includeantruntime="false" failonerror="true">
+            <classpath>
+                <fileset dir="${libs.dir}" includes="**/*.jar"/>
+            </classpath>
+            <include name="**/*.java"/>
+        </javac>
     </target>
 
-    <target name="clean" description="Limpa o build usando o build Ant interno">
-        <ant antfile="correcao/build/gradle-jar/src/build.xml" target="clean" />
+    <target name="compile-kotlin" description="Compila arquivos Kotlin do java (se `kotlinc` estiver disponível)" depends="collect-kotlin-files" if="should.compile.kotlin">
+        <echo message="Compilando Kotlin: kotlinc disponível e arquivos .kt encontrados"/>
+
+        <exec executable="kotlinc" failonerror="true">
+            <arg value="-classpath"/>
+            <arg path="${libs.dir}/*"/>
+            <arg value="-d"/>
+            <arg path="${classes.dir}"/>
+            <arg value="@${src.dir}/kotlin-files.txt"/>
+        </exec>
+    </target>
+
+    <target name="jar" description="Empacota classes em libs/server.jar" depends="compile-java,compile-kotlin">
+        <jar destfile="${libs.dir}/server.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="com.brproject.Main"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="copy-props" description="Copia arquivos .prop/.properties e handlers .pix/.pay para a distribuição" depends="init">
+        <copy todir="${dist.dir}" preservelastmodified="true">
+            <fileset dir="${src.dir}" includes="**/*.properties,**/*.prop,**/*.pix,**/*.pay"/>
+        </copy>
+    </target>
+
+    <tstamp>
+        <format property="now" pattern="yyyyMMdd_HHmmss"/>
+    </tstamp>
+
+    <target name="correction" description="Cria pasta de correção manual com os arquivos modificados e resumo padrão auto-farm-visual" depends="init">
+        <condition property="correction.dir.name" value="${correction.name}" else="${now}">
+            <isset property="correction.name"/>
+        </condition>
+        <echo message="Criando correção: ${correction.dir.name}"/>
+
+        <!-- Gera lista de arquivos alterados em tmp_files.list -->
+        <exec executable="git" failonerror="false" resultproperty="git.list.exit">
+            <arg value="diff"/>
+            <arg value="--name-only"/>
+            <redirector output="${correcao.dir}/tmp_files.list"/>
+        </exec>
+
+        <!-- Chama script Python para criar correcao/<name> com arquivos alterados e summary padrão -->
+        <exec executable="python" failonerror="false" resultproperty="py.exec.exit">
+            <arg value="tools/generate_correction.py"/>
+            <arg value="${correcao.dir}"/>
+            <arg value="${correction.dir.name}"/>
+            <arg value="${project.dir}"/>
+        </exec>
+
+        <delete file="${correcao.dir}/tmp_files.list"/>
+    </target>
+
+    <target name="compile" description="Compila Java e Kotlin e empacota" depends="jar,copy-props">
+        <echo message="Compile completo. server.jar em ${libs.dir}/server.jar; distribuição atualizada em ${dist.dir}"/>
+    </target>
+
+    <target name="clean" description="Limpa build">
+        <delete dir="${classes.dir}"/>
+        <delete dir="${libs.dir}"/>
     </target>
 
 </project>

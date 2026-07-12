@@ -37,6 +37,7 @@ for %%i in ("%APP_HOME%") do set APP_HOME=%%~fi
 
 @rem Add default JVM options here. You can also use JAVA_OPTS and GRADLE_OPTS to pass JVM options to this script.
 set DEFAULT_JVM_OPTS="-Xmx64m" "-Xms64m"
+set "GRADLE_OPTS=--enable-native-access=ALL-UNNAMED --add-opens java.base/java.lang=ALL-UNNAMED --add-opens java.base/java.util=ALL-UNNAMED --add-opens java.base/java.io=ALL-UNNAMED --add-opens java.base/java.lang.invoke=ALL-UNNAMED %GRADLE_OPTS%"
 
 @rem Find java.exe
 if defined JAVA_HOME goto findJavaFromJavaHome
@@ -101,25 +102,24 @@ if /i "%~1"=="br-ant-dist-test" (
         popd
         goto fail
     )
-)
 
 echo.
 echo Preparar Teste.
 
 @rem # STREAMING_CHUNK:Starting Login Server
-echo Iniciando StartLogin_SemDashboard.bat...
-if exist "Brproject_Distribution\StartLogin_SemDashboard.bat" (
-start "Login Server" cmd /c "cd /d Brproject_Distribution && call StartLogin_SemDashboard.bat"
+echo Iniciando Brproject_Distribution\dev-console\StartLogin_SemDashboard.bat...
+if exist "Brproject_Distribution\dev-console\StartLogin_SemDashboard.bat" (
+start "Login Server" cmd /c "cd /d Brproject_Distribution\dev-console && call StartLogin_SemDashboard.bat"
 ) else (
-echo Aviso: Arquivo Brproject_Distribution\StartLogin_SemDashboard.bat nao encontrado!
+echo Aviso: Arquivo Brproject_Distribution\dev-console\StartLogin_SemDashboard.bat nao encontrado!
 )
 
 @rem # STREAMING_CHUNK:Starting Game Server
-echo Iniciando StartGame_SemDashboard.bat...
-if exist "Brproject_Distribution\StartGame_SemDashboard.bat" (
-start "Game Server" cmd /c "cd /d Brproject_Distribution && call StartGame_SemDashboard.bat"
+echo Iniciando Brproject_Distribution\dev-console\StartGame_SemDashboard.bat...
+if exist "Brproject_Distribution\dev-console\StartGame_SemDashboard.bat" (
+start "Game Server" cmd /c "cd /d Brproject_Distribution\dev-console && call StartGame_SemDashboard.bat"
 ) else (
-echo Aviso: Arquivo Brproject_Distribution\StartGame_SemDashboard.bat nao encontrado!
+echo Aviso: Arquivo Brproject_Distribution\dev-console\StartGame_SemDashboard.bat nao encontrado!
 )
 
 popd

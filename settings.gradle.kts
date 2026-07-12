@@ -7,5 +7,3 @@ pluginManagement {
 }
 
 rootProject.name = "BrProject"
-include("core")
-project(":core").projectDir = file("correcao/build/gradle-jar/src")

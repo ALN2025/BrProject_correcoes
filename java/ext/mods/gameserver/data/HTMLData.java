@@ -81,6 +81,8 @@ public final class HTMLData extends AbstractLocaleData
 						{
 							var content = readString(file);
 							_data.get(locale).put(fileKey, content);
+							// also store with leading html/ to support callers that pass full path
+							_data.get(locale).put("html/" + fileKey, content);
 						}
 						catch (DataException e)
 						{
@@ -111,10 +113,12 @@ public final class HTMLData extends AbstractLocaleData
 	
 	public String getHtm(Locale locale, String file)
 	{
-		var result = _data.get(locale).get(file);
+		// normalize incoming file paths (accept both "html/..." and "..." formats)
+		String key = normalizeFile(file);
+		var result = _data.get(locale).get(key);
 		if (result == null)
 		{
-			result = _data.get(Config.DEFAULT_LOCALE).get(file);
+			result = _data.get(Config.DEFAULT_LOCALE).get(key);
 			if (result == null)
 				return "<html><body>Not found file: " + file + "</body></html>";
 		}
@@ -128,15 +132,28 @@ public final class HTMLData extends AbstractLocaleData
 	
 	public boolean exists(Locale locale, String file)
 	{
-		var path = resolve(locale, file);
-		
+		String key = normalizeFile(file);
+		var path = resolve(locale, key);
+
 		if (Files.exists(path) && !Files.isDirectory(path))
 			return true;
-		
+
 		if (!locale.equals(Config.DEFAULT_LOCALE))
 			return exists(Config.DEFAULT_LOCALE, file);
-		
+
 		return false;
+	}
+
+	private String normalizeFile(String file)
+	{
+		if (file == null)
+			return "";
+		String f = file.replace('\\', '/');
+		if (f.startsWith("html/"))
+			f = f.substring(5);
+		if (f.startsWith("/"))
+			f = f.substring(1);
+		return f;
 	}
 	
 	public static HTMLData getInstance()

@@ -140,11 +140,18 @@ public class MainFrame {
     
     
     private void handleCloseAction() {
-        String[] opcoes = {"Esconder", "Fechar", "Cancelar"};
-        int escolha = JOptionPane.showOptionDialog(frame, "O que deseja fazer?", "Sair do sistema", 
-                JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE, null, opcoes, opcoes[0]);
-        if (escolha == 0) { frame.setVisible(false); }
-        else if (escolha == 1) { playServerLoadedSoundLogout(); System.exit(0); }
+        int escolha = JOptionPane.showConfirmDialog(frame,
+                "Deseja encerrar o launcher e os servidores ativos?",
+                "Sair do sistema",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE);
+
+        if (escolha == JOptionPane.YES_OPTION) {
+            processManagerService.shutdownAllServers();
+            playServerLoadedSoundLogout();
+            frame.dispose();
+            System.exit(0);
+        }
     }
 
     private JMenuBar createMenuBar() {

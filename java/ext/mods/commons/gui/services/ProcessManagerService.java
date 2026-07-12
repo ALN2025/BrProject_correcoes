@@ -22,6 +22,9 @@ import java.io.File;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.TimeUnit;
 import java.util.prefs.Preferences;
 
 import javax.swing.JFrame;
@@ -34,6 +37,8 @@ import ext.mods.commons.util.JvmOptimizer;
 public class ProcessManagerService {
     
     private static final Preferences prefs = Preferences.userRoot().node("ram_allocation_settings");
+    private static final Map<String, Process> RUNNING = new ConcurrentHashMap<>();
+    private volatile boolean shuttingDown = false;
 
     public ProcessManagerService() {
     }
@@ -133,12 +138,23 @@ public class ProcessManagerService {
         System.out.println(String.join(" ", command));
         System.out.println("-----------------------------\n");
 
+        if (RUNNING.containsKey(tipo.toLowerCase()) && RUNNING.get(tipo.toLowerCase()).isAlive()) {
+            SwingUtilities.invokeLater(() -> JOptionPane.showMessageDialog(frame,
+                    (tipo.equalsIgnoreCase("gameserver") ? "Game server" : "Login server") + " já está em execução.",
+                    "Aviso", JOptionPane.WARNING_MESSAGE));
+            return;
+        }
+
+        RUNNING.remove(tipo.toLowerCase());
+
         new Thread(() -> {
+            String normalizedType = tipo.toLowerCase();
             try {
                 ProcessBuilder pb = new ProcessBuilder(command);
                 pb.directory(diretorioExecucao);
                 pb.redirectErrorStream(true);
                 Process processo = pb.start();
+                RUNNING.put(normalizedType, processo);
 
                 try (BufferedReader reader = new BufferedReader(new InputStreamReader(processo.getInputStream()))) {
                     String linha;
@@ -148,13 +164,16 @@ public class ProcessManagerService {
                 }
 
                 int exitCode = processo.waitFor();
-                
+
+                if (shuttingDown) {
+                    return;
+                }
+
                 if (exitCode == 2) {
                     System.out.println("Reiniciando servidor...");
                     Thread.sleep(1000);
                     iniciarProcesso(tipo, licenseKey, userEmail, isLightModeEnabled, frame);
-                } 
-                else if (exitCode != 0) {
+                } else if (exitCode != 0) {
                     SwingUtilities.invokeLater(() -> 
                         JOptionPane.showMessageDialog(frame, 
                             "Erro no servidor (Código " + exitCode + ").", 
@@ -164,7 +183,35 @@ public class ProcessManagerService {
 
             } catch (Exception e) {
                 e.printStackTrace();
+            } finally {
+                RUNNING.remove(normalizedType);
             }
         }).start();
+    }
+
+    public void shutdownAllServers() {
+        shuttingDown = true;
+        if (RUNNING.isEmpty()) {
+            return;
+        }
+
+        System.out.println("Encerrando servidores ativos...");
+        List<Process> processes = new ArrayList<>(RUNNING.values());
+        for (Process process : processes) {
+            if (process == null || !process.isAlive()) {
+                continue;
+            }
+            try {
+                process.destroy();
+                if (!process.waitFor(5, TimeUnit.SECONDS)) {
+                    process.destroyForcibly().waitFor(5, TimeUnit.SECONDS);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        RUNNING.clear();
     }
 }
