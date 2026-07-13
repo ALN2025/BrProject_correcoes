@@ -1,5 +1,5 @@
 @echo off
-title Login Server - Brproject
+title BrProject - Start Login
 color 0B
 cd /d "%~dp0"
 
@@ -13,7 +13,6 @@ if not exist "%JAVA%" (
     exit /b 1
 )
 
-REM --- Flags para VPS/servidor: evita crash de driver grafico (awt.dll) ---
 echo === Iniciando Login Server ===
 echo Java: %JAVA%
 %JAVA% -Xms256m -Xmx512m -Dext.mods.gameserver.data.AbstractLocaleData.BASE_LOCALE_PATH=html -Dsun.java2d.opengl=false -Dsun.java2d.d3d=false -Dsun.java2d.pmoffscreen=false -Dbrproject.safe.graphics=true -cp "libs/*" ext.mods.security.LicenseInit
